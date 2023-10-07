@@ -20,8 +20,16 @@ export class Saturation extends (PureComponent || Component) {
   getContainerRenderWindow() {
     const { container } = this
     let renderWindow = window
-    while (!renderWindow.document.contains(container) && renderWindow.parent !== renderWindow) {
-      renderWindow = renderWindow.parent
+    try {
+      while (!renderWindow.document.contains(container) && renderWindow.parent !== renderWindow) {
+        try {
+          renderWindow = renderWindow.parent;
+        }
+        catch (e) {
+          break;
+        }
+      }
+    } catch (e) {
     }
     return renderWindow
   }
@@ -57,7 +65,7 @@ export class Saturation extends (PureComponent || Component) {
       'default': {
         color: {
           absolute: '0px 0px 0px 0px',
-          background: `hsl(${ this.props.hsl.h },100%, 50%)`,
+          background: `hsl(${this.props.hsl.h},100%, 50%)`,
           borderRadius: this.props.radius,
         },
         white: {
@@ -71,8 +79,8 @@ export class Saturation extends (PureComponent || Component) {
         },
         pointer: {
           position: 'absolute',
-          top: `${ -(this.props.hsv.v * 100) + 100 }%`,
-          left: `${ this.props.hsv.s * 100 }%`,
+          top: `${-(this.props.hsv.v * 100) + 100}%`,
+          left: `${this.props.hsv.s * 100}%`,
           cursor: 'default',
         },
         circle: {
@@ -96,11 +104,11 @@ export class Saturation extends (PureComponent || Component) {
 
     return (
       <div
-        style={ styles.color }
-        ref={ container => this.container = container }
-        onMouseDown={ this.handleMouseDown }
-        onTouchMove={ this.handleChange }
-        onTouchStart={ this.handleChange }
+        style={styles.color}
+        ref={container => this.container = container}
+        onMouseDown={this.handleMouseDown}
+        onTouchMove={this.handleChange}
+        onTouchStart={this.handleChange}
       >
         <style>{`
           .saturation-white {
@@ -112,14 +120,14 @@ export class Saturation extends (PureComponent || Component) {
             background: linear-gradient(to top, #000, rgba(0,0,0,0));
           }
         `}</style>
-        <div style={ styles.white } className="saturation-white">
-          <div style={ styles.black } className="saturation-black" />
-          <div style={ styles.pointer }>
-            { this.props.pointer ? (
-              <this.props.pointer { ...this.props } />
+        <div style={styles.white} className="saturation-white">
+          <div style={styles.black} className="saturation-black" />
+          <div style={styles.pointer}>
+            {this.props.pointer ? (
+              <this.props.pointer {...this.props} />
             ) : (
-              <div style={ styles.circle } />
-            ) }
+              <div style={styles.circle} />
+            )}
           </div>
         </div>
       </div>
