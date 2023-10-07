@@ -18,20 +18,13 @@ export class Saturation extends (PureComponent || Component) {
   }
 
   getContainerRenderWindow() {
-    const { container } = this
-    let renderWindow = window
-    try {
-      while (!renderWindow.document.contains(container) && renderWindow.parent !== renderWindow) {
-        try {
-          renderWindow = renderWindow.parent;
-        }
-        catch (e) {
-          break;
-        }
-      }
-    } catch (e) {
-    }
-    return renderWindow
+    // const { container } = this
+    // let renderWindow = window
+    // while (!renderWindow.document.contains(container) && renderWindow.parent !== renderWindow) {
+    //   renderWindow = renderWindow.parent
+    // }
+    // return renderWindow
+    return window;
   }
 
   handleChange = (e) => {
